@@ -27,6 +27,7 @@ def login():
     pass
 
 @app.route('/categoria', methods=['GET'])
+@jwt_required()
 def get_all_categoria():
     schema = CategoriaSchema(many=True)
     categorias = Categoria.query.all()
@@ -42,6 +43,7 @@ def get_all_prenda():
     return jsonify(response)
 
 @app.route('/categoria', methods=['POST'])
+@jwt_required()
 def add_categoria():
     categoria_dict = CategoriaSchema().load(request.get_json())
     categoria = Categoria(**categoria_dict)
@@ -50,6 +52,7 @@ def add_categoria():
     return "testing"
 
 @app.route('/prenda', methods=['POST'])
+@jwt_required()
 def add_prenda():
     prenda_dict = PrendaSchema().load(request.get_json())
     categoria = Categoria.query.get(prenda_dict["categoria_id"])
