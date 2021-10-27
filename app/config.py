@@ -9,6 +9,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = 'my_precious_secret_key'
     JWT_SECRET_KEY = 'my_secret_key'
+    CORS_HEADERS = 'Content_type'
 
 
 class DevelopmentConfig(Config):

@@ -1,7 +1,8 @@
 from flask import jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_cors import cross_origin
 
-from app import app, db, jwt, bcrypt
+from app import app, db, jwt, bcrypt, cors
 from app.models.Models import User, Categoria, Prenda, Unidad
 from app.models.Schemas import UserSchema, CategoriaSchema, PrendaSchema, UnidadSchema
 
@@ -28,6 +29,7 @@ def login():
 
 @app.route('/categoria', methods=['GET'])
 @jwt_required()
+@cross_origin()
 def get_all_categoria():
     schema = CategoriaSchema(many=True)
     categorias = Categoria.query.all()
@@ -35,7 +37,7 @@ def get_all_categoria():
     return jsonify(response)
 
 @app.route('/prenda', methods=['GET'])
-@jwt_required()
+@cross_origin()
 def get_all_prenda():
     schema = PrendaSchema(many=True)
     prendas = Prenda.query.all()
@@ -43,7 +45,7 @@ def get_all_prenda():
     return jsonify(response)
 
 @app.route('/categoria', methods=['POST'])
-@jwt_required()
+@cross_origin()
 def add_categoria():
     categoria_dict = CategoriaSchema().load(request.get_json())
     categoria = Categoria(**categoria_dict)
@@ -52,7 +54,7 @@ def add_categoria():
     return "testing"
 
 @app.route('/prenda', methods=['POST'])
-@jwt_required()
+@cross_origin()
 def add_prenda():
     prenda_dict = PrendaSchema().load(request.get_json())
     categoria = Categoria.query.get(prenda_dict["categoria_id"])
