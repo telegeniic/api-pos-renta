@@ -2,3 +2,5 @@ __pycache__/
 .db
 env/
 .env/
+app/.db
+SQL/
